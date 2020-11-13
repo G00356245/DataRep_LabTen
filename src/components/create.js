@@ -1,5 +1,6 @@
 import React from 'react';
 import '../App.css';
+import axios from 'axios';  //using axios, http requests to fetch or save data.
 
 //Create class
 export class Create extends React.Component {
@@ -46,6 +47,21 @@ export class Create extends React.Component {
     onSubmit(e) {
         e.preventDefault(); //stop the button from  being called multiple times.
         alert("Movie: " + this.state.Title + " " + this.state.Year + " " + this.state.Poster);  //this line will alert whenever the submit button is clicked.
+
+            //making an object with the three values that is recieved.
+        const newMovie = {
+            title: this.state.Title,
+            year: this.state.Year,
+            poster: this.state.Poster
+        }
+        axios.post('http://localhost:4000/api/movies',newMovie) //post request, send data to the server.
+        .then((res)=>{
+            console.log(res);
+        })  //respond to console.
+
+        .catch((error)=>{
+            console.log(error);
+        }); //if .then does not work then error will be passed to console.
     }
 
     render() {

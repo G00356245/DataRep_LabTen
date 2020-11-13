@@ -13,9 +13,9 @@ export class Read extends React.Component {
 
     //using a life cyclehook, this method will get called everytime our componeent is mounted.
     componentDidMount() {
-        axios.get('https://jsonblob.com/api/jsonblob/520c3b5e-0312-11eb-a6af-cbf00d776032')
+        axios.get('http://localhost:4000/api/movies')   //calling the list of movies from server localhost:4000.
             .then((response) => {
-                this.setState({ movies: response.data.Search })
+                this.setState({ movies: response.data.movies})
             })    //this will use the fufill state.
             .catch(
                 (error) => {
