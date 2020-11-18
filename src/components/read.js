@@ -15,7 +15,7 @@ export class Read extends React.Component {
     componentDidMount() {
         axios.get('http://localhost:4000/api/movies')   //calling the list of movies from server localhost:4000.
             .then((response) => {
-                this.setState({ movies: response.data.movies})
+                this.setState({ movies: response.data })
             })    //this will use the fufill state.
             .catch(
                 (error) => {
