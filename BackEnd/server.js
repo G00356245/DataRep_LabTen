@@ -90,6 +90,15 @@ app.get('/api/movies/:id', (req, res) => {
     })
 })
 
+//listen for a delete method and log data that has been deleted 
+app.delete('/api/movies/:id', (req, res) => {
+    console.log("Delete movie: " + req.params.id);
+
+    MovieModel.findByIdAndDelete(req.params.id, (err, data) => {
+        res.send(data);
+    })
+})
+
 //post request, using body parser. this will recieve data that is past up from the web.
 app.post('/api/movies', (req, res) => {
     console.log('Movie Recieved!');
