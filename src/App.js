@@ -8,6 +8,7 @@ import { Navbar, Nav } from 'react-bootstrap';// importing bootstrap navbar
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'; //importing a routing
 import { Read } from './components/read';
 import { Create } from './components/create';
+import { Edit } from './components/edit';
 
 //main class
 class App extends React.Component {
@@ -29,8 +30,9 @@ class App extends React.Component {
           {/* Added a Switch, this allows the user to go from each component of the website without having to go to a different page. */}
           <Switch>
             <Route path='/' component={Content} exact></Route>
-            <Route path='/read' component={Read} exact></Route>
-            <Route path='/create' component={Create} exact></Route>
+            <Route path='/read' component={Read} ></Route>
+            <Route path='/create' component={Create} ></Route>
+            <Route path='/edit/:id' component={Edit} ></Route>
           </Switch>
         </div>
       </Router>

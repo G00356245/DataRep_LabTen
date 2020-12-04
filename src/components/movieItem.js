@@ -2,6 +2,7 @@ import React from 'react';
 import Card from 'react-bootstrap/Card'; //imported card from bootstrap
 import Button from 'react-bootstrap/Button'; //using the react bootstrap button 
 import axios from 'axios'; //importing axios to use our http client
+import {Link} from 'react-router-dom';
 //MoveItem class
 export class MovieItem extends React.Component {
 
@@ -31,6 +32,7 @@ export class MovieItem extends React.Component {
         return (
             //added card from bootstrap, this allows the movie posters to have a card layout look on the website.
             //ract bootstrap button is added to perform a delete function.
+            //Edit link is created using react-router-dom.
             <div>
                 <Card>
                     <Card.Header>{this.props.movie.title}</Card.Header>
@@ -42,6 +44,7 @@ export class MovieItem extends React.Component {
                             </footer>
                         </blockquote>
                     </Card.Body>
+                    <Link to={"/edit/"+ this.props.movie._id} className="btn btn-primary">Edit</Link>
                     <Button variant="danger" onClick={this.DeleteMovie}>Delete</Button>
                 </Card>
             </div>

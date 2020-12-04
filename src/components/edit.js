@@ -2,8 +2,8 @@ import React from 'react';
 import '../App.css';
 import axios from 'axios';  //using axios, http requests to fetch or save data.
 
-//Create class
-export class Create extends React.Component {
+//Edit class
+export class Edit extends React.Component {
     //added constructor.
     constructor() {
         super();   //this line of code is needed to use the form.
@@ -20,6 +20,23 @@ export class Create extends React.Component {
             Year: '',
             Poster: ''
         }
+    }
+    //using life cycyle hook, this will be called once the component is active in the view.
+    componentDidMount() {
+        console.log(this.props.match.params.id);
+
+        axios.get('http://localhost:4000/api/movies/'+this.props.match.params.id)
+            .then(response =>{
+                this.setState({
+                    _id:response.data._id,
+                    Title:response.data.title,
+                    Year:response.data.year,
+                    Poster:response.data.poster
+                })
+            })
+            .catch((error)=>{
+                console.log(error);
+            });
     }
 
     //method for calling the onchangeYear.
@@ -52,20 +69,29 @@ export class Create extends React.Component {
         const newMovie = {
             title: this.state.Title,
             year: this.state.Year,
-            poster: this.state.Poster
+            poster: this.state.Poster,
+            _id: this.state._id
         }
-        axios.post('http://localhost:4000/api/movies', newMovie) //post request, send data to the server.
-            .then((res) => {
-                console.log(res);
-            })  //respond to console.
 
-            .catch((error) => {
-                console.log(error);
-            }); //if .then does not work then error will be passed to console.
+        //using axios put to call updated data for movies.
+        axios.put('http://localhost:4000/api/movies/'+this.state._id, newMovie)
+            .then(res => {
+                console.log(res.data)
+            })  //respond to console.
+            .catch();
+
+        // axios.post('http://localhost:4000/api/movies', newMovie) //post request, send data to the server.
+        //     .then((res) => {
+        //         console.log(res);
+        //     })  //respond to console.
+
+        //     .catch((error) => {
+        //         console.log(error);
+        //     }); //if .then does not work then error will be passed to console.
     }
 
     render() {
-        //adding forms for movie title. year and poster to the create page to be able to input data.
+        //adding forms for movie title. year and poster to the edit page to be able to input data.
         //onSubmit allows for the submission of input data in the form.
         //added a submit button at the end so that the users is able to submit data by clicking the button.
         return (
@@ -83,7 +109,7 @@ export class Create extends React.Component {
                         <label>Add Movie Year: </label>
                         <input type='text'
                             className='form-control'
-                            value={this.state.year}
+                            value={this.state.Year}
                             onChange={this.onChangeYear}></input>
                     </div>
 
@@ -97,7 +123,7 @@ export class Create extends React.Component {
 
                     <div className='form-group'>
                         <input type='submit'
-                            value='Add Movie'
+                            value='Update Data'
                             className='btn btn-primary'></input>
                     </div>
                 </form>

@@ -90,6 +90,18 @@ app.get('/api/movies/:id', (req, res) => {
     })
 })
 
+//using a put method here so that it can find the movie by id and update it. 
+app.put('/api/movies/:id', (req, res) => {
+    console.log("update movie: "+req.params.id);
+    console.log(req.bosy);
+
+    //once the new data has been submitted and override then it will send me back the data.
+    MovieModel.findByIdAndUpdate(req.params.id,req.body, {new:true},
+        (err, data) => {
+        res.send(data);
+    })
+})
+
 //listen for a delete method and log data that has been deleted 
 app.delete('/api/movies/:id', (req, res) => {
     console.log("Delete movie: " + req.params.id);
