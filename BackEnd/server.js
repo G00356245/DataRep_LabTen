@@ -4,6 +4,7 @@ const port = 4000   //local host port changed from 3000 to 4000 to not confuse t
 const cors = require('cors');   //installed cors package, cross origin resource sharing. to be able to access javascript remotely.
 const bodyParser = require("body-parser");  //using the bod-parser package for the post method.
 const mongoose = require('mongoose');   //including mongoose to open a connection to the test database on our local running machine.
+const path = require('path'); // needed to access server thorugh path.
 
 app.use(cors());
 app.use(function (req, res, next) {
@@ -13,6 +14,10 @@ app.use(function (req, res, next) {
         "Origin, X-Requested-With, Content-Type, Accept");
     next();
 }); //using cros. should be able to call from front end.
+
+//configurations to find the build and static folders.
+app.use(express.static(path.join(__dirname, '../build')));  //this will allow the server to find the build folder.
+app.use('/static', express.static(path.join(__dirname, 'build//static'))); //this will find the static folder.
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -129,6 +134,10 @@ app.post('/api/movies', (req, res) => {
     res.send('Movie Added');
 })
 
+//the get request will send back the index.html file.
+app.get('*', (req,res)=>{
+    res.sendFile(path.join(__dirname+'/../build/index.html')); // will send the index.html file to the user.
+})
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
 })
